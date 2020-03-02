@@ -1,0 +1,28 @@
+pipeline {
+  agent { label "prod" }
+ 
+  tools {nodejs "node"}
+ 
+  stages {
+    stage('Update NPM version') {
+      steps {
+        sh 'npm install -g npm@latest'
+      }
+    }
+    stage('Install dependencies') {
+      steps {
+        sh 'npm ci'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+     stage('Test') {
+      steps {
+        sh 'npm run test'
+      }
+    }
+  }
+}
